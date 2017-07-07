@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='weatherapp'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <script src="weather-app.module.js"></script>
+    <script src="weather-app.config.js"></script>
+    <script src="constants/api-key.constant.js"></script>
+    <script src="current-weather/current-weather.module.js"></script>
+    <script src="current-weather/current-weather.component.js"></script>
+    <script src="forecast-weather/forecast-weather.module.js"></script>
+    <script src="forecast-weather/forecast-weather.component.js"></script>
+    <script src="services/countries.module.js"></script>
+    <script src="services/countries.service.js"></script>
+    <script src="services/weather.module.js"></script>
+    <script src="services/weather.service.js"></script>
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Global Weather</h1>
+    <hr>
+    <a href="#!/currentWeather">Current</a>
+    <a href="#!/forecastWeather">Forecast</a>
+    <div ng-view></div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<div>
+    <h1>{{"Current" + " Weather"}}</h1>
+    <select name="" id="" ng-model="$ctrl.selectedCountry" ng-change="$ctrl.getDivisions($ctrl.selectedCountry)">
+        <option value="{{country.alpha2}}" ng-repeat="country in $ctrl.countries | orderBy: $ctrl.orderByName">{{country.officialName}}</option>
+    </select>
+    <select name="" id="" ng-model="$ctrl.selectedDivision" ng-change="$ctrl.getCurrentWeather($ctrl.selectedDivision)">
+        <option value="{{division}}" ng-repeat="division in $ctrl.countryDivisions | orderBy: $ctrl.orderByName">{{division}}</option>
+    </select>
+</div>

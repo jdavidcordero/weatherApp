@@ -1,0 +1,1 @@
+angular.module('weatherapp').constant('API_KEY','055494487f1a3c0beb265d084d2b351f');

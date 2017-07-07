@@ -1,0 +1,8 @@
+1- Install Node.js [or check if it is alredy installed by: node --version]
+2- Create package.json file
+3- Run: npm install -g bower
+4- Run: bower install bower.json
+5- Create bower.json file
+6- Run: bower install
+7- Delete folders in bower_components that are not angular|angular-mocks|angular-resource|angular-route|bootstrap|jquery
+8- Add references in index.html
