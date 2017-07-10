@@ -24,10 +24,17 @@
     <title>Weather App</title>
 </head>
 <body>
-    <h1>Global Weather</h1>
+    <div class="container">
+        <h1>Global Weather</h1>
+    </div>
     <hr>
-    <a href="#!/currentWeather">Current</a>
-    <a href="#!/forecastWeather">Forecast</a>
-    <div ng-view></div>
+    <div class="container">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active"><a href="#!/currentWeather">Current</a></li>
+            <li role="presentation"><a href="#!/forecastWeather">Forecast</a></li>
+        </ul>
+        <div ng-view></div>
+    </div>
+    
 </body>
 </html>
