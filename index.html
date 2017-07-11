@@ -21,6 +21,9 @@
     <script src="services/countries.service.js"></script>
     <script src="services/weather.module.js"></script>
     <script src="services/weather.service.js"></script>
+    <script src="common-form/common-form.module.js"></script>
+    <script src="common-form/common-form.component.js"></script>
+    <script src="common-form/common-form.service.js"></script>
     <title>Weather App</title>
 </head>
 <body>
@@ -33,6 +36,7 @@
             <li role="presentation" class="active"><a href="#!/currentWeather">Current</a></li>
             <li role="presentation"><a href="#!/forecastWeather">Forecast</a></li>
         </ul>
+        <common-form></common-form>
         <div ng-view></div>
     </div>
     

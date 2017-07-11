@@ -1,1 +1,1 @@
-angular.module('currentWeather',['countries']);
+angular.module('currentWeather',['commonForm']);
