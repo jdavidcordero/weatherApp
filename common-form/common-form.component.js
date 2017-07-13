@@ -1,17 +1,32 @@
 angular.module('commonForm').component('commonForm',{
     templateUrl: 'common-form/common-form.template.html',
-    controller: ['CountryForm',function commmonFormController(CountryForm){
-        CountryForm.init().then(function(obj){
-            this.selectedCountry = CountryForm.selectedCountry;
-            this.getDivisions = function getDivisions(selectedCountry){
-                CountryForm.getDivisions(selectedCountry);
+    controller: ['CountryForm','$rootScope',function commmonFormController(CountryForm,$rootScope){
+        var self = this;
+        self.form = CountryForm;
+        CountryForm.init().then(function(form){
+            self.selectedCountry = form.selectedCountry;
+            self.getDivisionsFromCountry = function getDivisionsFromCountry(selectedCountry){
+                form.getDivisionsFromCountry(selectedCountry);
+                self.countryDivisions = form.countryDivisions;
+                self.selectedDivision = form.selectedDivision;
             }
-            this.countries = CountryForm.countries;
-            this.orderByName = 'officialName';
-            this.selectedDivision = CountryForm.selectedDivision;
-            this.getCurrentWeather = function getCurrentWeather(selectedDivision){
-                CountryForm.getCurrentWeather(selectedDivision);
+            self.countries = form.countries;
+            self.orderByName = 'officialName';
+            self.selectedDivision = form.selectedDivision;
+            self.getCurrentWeatherFromDivision = function getCurrentWeatherFromDivision(selectedDivision){
+                form.getCurrentWeatherFromDivision(selectedDivision).then(function(res){},function(error){
+                    self.ErrorMessage = error;
+                    $('#errorAlert').removeClass('hidden');
+                });
             }
+            self.countryDivisions = form.countryDivisions;
+        },function(error){
+            self.ErrorMessage = error;
+            $('#errorAlert').removeClass('hidden');
         });
+
+        self.closeErrorAlert = function closeErrorAlert(){
+            $('#errorAlert').addClass('hidden');
+        }
     }]
 });

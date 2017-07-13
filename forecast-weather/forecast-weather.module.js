@@ -1,1 +1,1 @@
-angular.module('forecastWeather',[]);
+angular.module('forecastWeather',['commonForm']);
