@@ -1,4 +1,43 @@
-<div>
-    <h1>{{"Forecast" + " Weather"}}</h1>
-    <p>{{$ctrl.countries.AF.name}}</p>
+<div class="container">
+    <hr>
+    <h2>{{$ctrl.forecastWeather.name +", "+ $ctrl.forecastWeather.country}}</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>Date</th>
+                <th>Weather</th>
+                <th>Temperature</th>
+                <th>Cloudiness</th>
+                <th>Pressure</th>
+                <th>Humidity</th>
+                <th>Wind</th>
+            </tr>
+            <tr ng-repeat="forecastWeather in $ctrl.forecastWeather.list">
+                <td>
+                    <img ng-src="http://openweathermap.org/img/w/{{forecastWeather.weather[0].icon}}.png" alt="">
+                    {{forecastWeather.dt_txt}}
+                </td>
+                <td>
+                    <span><strong>Weather: </strong>{{forecastWeather.weather[0].main}}</span><br>
+                    <span><strong>Description: </strong>{{forecastWeather.weather[0].description}}</span>
+                </td>
+                <td>
+                    <span>{{forecastWeather.main.temp + "°C"}}</span><br>
+                    <span><strong>Min: </strong>{{forecastWeather.main.temp_min + "°C"}}  <strong>Max: </strong>{{forecastWeather.main.temp_max + "°C"}}</span>
+                </td>
+                <td>
+                    {{forecastWeather.clouds.all + "%"}}
+                </td>
+                <td>
+                    {{forecastWeather.main.pressure + " hpa"}}
+                </td>
+                <td>
+                    {{forecastWeather.main.humidity + "%"}}
+                </td>
+                <td>
+                    {{forecastWeather.wind.speed + " m/s, " + forecastWeather.wind.windDirection + " (" + forecastWeather.wind.deg +")"}}
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-angular.module('commonForm').factory('CountryForm',['Country','Divisions','CurrentWeather','$q','$rootScope',function(Country,Divisions,CurrentWeather,$q,$rootScope){
+angular.module('commonForm').factory('CountryForm',['Country','Divisions','CurrentWeather','ForecastWeather','$q','$rootScope',function(Country,Divisions,CurrentWeather,ForecastWeather,$q,$rootScope){
     var form = new Object();
     form.orderByName = 'officialName';  //ORDER COUNTRIES BY NAME
 
@@ -32,6 +32,17 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
         var deferred = $q.defer();
         CurrentWeather.get({q: selectedDivision+','+form.selectedCountry},function(currentWeather){
             deferred.resolve(currentWeather);
+        },function(error){
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+    }
+
+    form.getForecastWeather = function getForecastWeather(selectedDivision){ //FUNCTION TO GET CURRENT WEATHER OF A DIVISION
+        var deferred = $q.defer();
+        ForecastWeather.get({q: selectedDivision+','+form.selectedCountry},function(forecastWeather){
+            deferred.resolve(forecastWeather);
         },function(error){
             deferred.reject(error);
         });
@@ -73,7 +84,23 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
                         form.maxTemperature = parseTemperature(form.currentWeather.main.temp_max);
                         form.windDirection = parseDirection(form.currentWeather.wind.deg);
 
-                        deferred.resolve(form);
+                        form.getForecastWeather(form.selectedDivision).then(function(forecastWeather){
+                            form.forecastWeather = forecastWeather;
+                            form.forecastWeather.list = forecastWeather.list.slice(0,6);
+                            form.forecastWeather.name = form.currentWeather.name;
+                            form.forecastWeather.country = form.selectedCountry;
+                            forecastWeather.list.slice(0,6).forEach(function(forecast,index){
+                                form.forecastWeather.list[index].dt_txt = parseDate2(forecast.dt_txt);
+                                form.forecastWeather.list[index].main.temp = parseTemperature(forecast.main.temp);
+                                form.forecastWeather.list[index].main.temp_min = parseTemperature(forecast.main.temp_min);
+                                form.forecastWeather.list[index].main.temp_max = parseTemperature(forecast.main.temp_max);
+                                form.forecastWeather.list[index].wind.windDirection = parseDirection(forecast.wind.deg);
+                            });
+
+                            deferred.resolve(form);
+                        },function(error){
+                            deferred.reject('Division not found. Sorry');
+                        });
                     }
                 },function(error){
                     deferred.reject('Division not found. Sorry');
@@ -108,10 +135,29 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
                 form.temperature = parseTemperature(form.currentWeather.main.temp);
                 form.minTemperature = parseTemperature(form.currentWeather.main.temp_min);
                 form.maxTemperature = parseTemperature(form.currentWeather.main.temp_max);
-                form.windDirection = parseDirection(form.currentWeather.wind.deg);  
+                form.windDirection = parseDirection(form.currentWeather.wind.deg);
+                
+                form.getForecastWeather(selectedDivision).then(function(forecastWeather){
+                    form.forecastWeather = forecastWeather;
+                    form.forecastWeather.list = forecastWeather.list.slice(0,6);
+                    form.forecastWeather.name = form.currentWeather.name;
+                    form.forecastWeather.country = form.selectedCountry;
+                    forecastWeather.list.slice(0,6).forEach(function(forecast,index){
+                        form.forecastWeather.list[index].dt_txt = parseDate2(forecast.dt_txt);
+                        form.forecastWeather.list[index].main.temp = parseTemperature(forecast.main.temp);
+                        form.forecastWeather.list[index].main.temp_min = parseTemperature(forecast.main.temp_min);
+                        form.forecastWeather.list[index].main.temp_max = parseTemperature(forecast.main.temp_max);
+                        form.forecastWeather.list[index].wind.windDirection = parseDirection(forecast.wind.deg);
+                    });
 
-                $rootScope.$broadcast('cityChange');
-                deferred.resolve(form);
+                    deferred.resolve(form);
+                    $rootScope.$broadcast('cityChange');
+
+                },function(error){
+                    deferred.reject('Division not found. Sorry');
+                });
+
+                
             }
         },function(error){
             deferred.reject('Division not found. Sorry');
@@ -134,6 +180,19 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
 
         // Will display time in 10:30:23 format
         return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+    }
+
+    function parseDate2(dt_tex){
+        var fullDate = new Date(dt_tex);
+        
+        var arrayDay = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        var arrayMonth = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        var date = fullDate.getDate();
+        var month = arrayMonth[fullDate.getMonth()];
+        var day = arrayDay[fullDate.getDay()];
+
+        return day + ' ' + date + ' ' + month;
     }
 
     function parseTemperature(temperature){
