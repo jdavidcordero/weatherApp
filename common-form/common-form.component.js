@@ -3,6 +3,7 @@ angular.module('commonForm').component('commonForm',{
     controller: ['CountryForm','$rootScope',function commmonFormController(CountryForm,$rootScope){
         var self = this;
         self.form = CountryForm;
+        
         CountryForm.init().then(function(form){
             self.selectedCountry = form.selectedCountry;
             self.getDivisionsFromCountry = function getDivisionsFromCountry(selectedCountry){
@@ -13,8 +14,8 @@ angular.module('commonForm').component('commonForm',{
             self.countries = form.countries;
             self.orderByName = 'officialName';
             self.selectedDivision = form.selectedDivision;
-            self.getCurrentWeatherFromDivision = function getCurrentWeatherFromDivision(selectedDivision){
-                form.getCurrentWeatherFromDivision(selectedDivision).then(function(res){},function(error){
+            self.getWeatherFromDivision = function getWeatherFromDivision(selectedDivision){
+                form.getWeatherFromDivision(selectedDivision).then(function(res){},function(error){
                     self.ErrorMessage = error;
                     $('#errorAlert').removeClass('hidden');
                 });

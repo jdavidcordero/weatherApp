@@ -1,4 +1,3 @@
-<br>
 <form action="" class="form-inline">
     <div class="form-group">
         <label for="countrySelect">Country</label>
@@ -8,12 +7,11 @@
     </div>
     <div class="form-group">
         <label for="divisionSelect">Division</label>
-        <select name="" id="divisionSelect" class="form-control" ng-model="$ctrl.selectedDivision" ng-change="$ctrl.getCurrentWeatherFromDivision($ctrl.selectedDivision)">
+        <select name="" id="divisionSelect" class="form-control" ng-model="$ctrl.selectedDivision" ng-change="$ctrl.getWeatherFromDivision($ctrl.selectedDivision)">
             <option value="{{division}}" ng-repeat="division in $ctrl.countryDivisions | orderBy: $ctrl.orderByName">{{division}}</option>
         </select>
     </div>
 </form>
-<br>
 <div class="alert alert-danger hidden" role="alert" id="errorAlert">
     <button type="button" class="close" ng-click="$ctrl.closeErrorAlert()">
         <span aria-hidden="true">&times;</span>

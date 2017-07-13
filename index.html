@@ -10,6 +10,8 @@
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/common-form.css">
     <script src="weather-app.module.js"></script>
     <script src="weather-app.config.js"></script>
     <script src="constants/api-key.constant.js"></script>
@@ -27,18 +29,29 @@
     <title>Weather App</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container container-header">
         <h1>Global Weather</h1>
     </div>
-    <hr>
     <div class="container">
         <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" class="active"><a href="#!/currentWeather">Current</a></li>
-            <li role="presentation"><a href="#!/forecastWeather">Forecast</a></li>
+            <li role="presentation" id="liNavCurrent" class="liActive"><a href="#!/currentWeather">Current Weather</a></li>
+            <li role="presentation" id="liNavForecast"><a href="#!/forecastWeather">Forecast Weather</a></li>
         </ul>
         <common-form></common-form>
         <div ng-view></div>
     </div>
+
+    <script>
+        $('#liNavCurrent').click(function(){
+            $('#liNavForecast').removeClass('liActive');
+            $('#liNavCurrent').addClass('liActive');
+        });
+
+        $('#liNavForecast').click(function(){
+            $('#liNavCurrent').removeClass('liActive');
+            $('#liNavForecast').addClass('liActive');
+        });
+    </script>
     
 </body>
 </html>

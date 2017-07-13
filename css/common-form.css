@@ -1,0 +1,22 @@
+:root {
+    --main-color: #4A8479;
+    --main-color-hover: #42756a;
+    --gray-1: #9f9f9f;
+    --gray-1-hover: #8d8d8d;
+}
+
+.form-inline{
+    margin-top: 20px;
+}
+
+.form-inline .form-group{
+    margin-left: 10px;
+}
+
+.form-inline .form-group label{
+    margin-right: 5px;
+}
+
+.form-inline .form-group select{
+    border-color: var(--main-color);
+}

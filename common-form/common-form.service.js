@@ -87,14 +87,14 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
 
 
         form.selectedDivision = form.countryDivisions[0];
-        form.getCurrentWeatherFromDivision(form.selectedDivision).then(function(res){
+        form.getWeatherFromDivision(form.selectedDivision).then(function(res){
             deferred.resolve(res);
         });
 
         return deferred.promise;
     }
 
-    form.getCurrentWeatherFromDivision = function getCurrentWeatherFromDivision(selectedDivision){
+    form.getWeatherFromDivision = function getWeatherFromDivision(selectedDivision){
         var deferred = $q.defer();
         form.getCurrentWeather(selectedDivision).then(function(currentWeather){
             if(currentWeather.sys.country === form.selectedCountry){

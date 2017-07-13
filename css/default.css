@@ -1,0 +1,44 @@
+:root {
+    --main-color: #4A8479;
+    --main-color-hover: #42756a;
+    --gray-1: #9f9f9f;
+    --gray-1-hover: #8d8d8d;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body{
+    background-color: white;
+}
+
+.container-header{
+    background-color: var(--main-color);
+    color: white;
+    width: 100%;
+    margin-bottom: 30px;
+    padding-left: 5%;
+}
+
+.nav-tabs .liActive a{
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.nav-tabs .liActive a:hover{
+    border: 1px solid var(--main-color);
+    background-color: white;
+    font-weight: bold;
+}
+
+.nav-tabs li a{
+    border: 1px solid var(--gray-1);
+    color: black;
+    margin-left: 1px;
+}
+
+.nav-tabs li a:hover{
+    font-weight: bold;
+}
