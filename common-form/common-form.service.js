@@ -65,45 +65,8 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
 
             form.getAllDivisions().then(function(allDivisions){
                 form.allDivisions = allDivisions;
-                var divisionsByCountryCode = allDivisions[form.selectedCountry].divisions;
-                form.countryDivisions = $.map(divisionsByCountryCode, function(element){ //ALL DIVISIONS OF A COUNTRY TO FILL THE SELECT
-                    return element;
-                });
-                form.wikiUrl = form.pureCountries[form.selectedCountry].wikiUrl; //SET URL TO KNOW MORE ABOUT THE COUNTRY WHEN COUNTRY CHANGES
-                form.officialName = form.pureCountries[form.selectedCountry].officialName; //SET OFFICIAL NAME OF COUNTRY WHEN COUNTRY CHANGES
-
-                form.selectedDivision = form.countryDivisions[0]; //DIVISION SELECTED BY DEFAULT IN SELECT
-
-                form.getCurrentWeather(form.selectedDivision).then(function(currentWeather){
-                    if(currentWeather.sys.country === form.selectedCountry){
-                        form.currentWeather = currentWeather; // CURRENT WEATHER INFORMATION OF A DIVISION
-                        form.sunrise = parseDate(form.currentWeather.sys.sunrise);
-                        form.sunset = parseDate(form.currentWeather.sys.sunset);
-                        form.temperature = parseTemperature(form.currentWeather.main.temp);
-                        form.minTemperature = parseTemperature(form.currentWeather.main.temp_min);
-                        form.maxTemperature = parseTemperature(form.currentWeather.main.temp_max);
-                        form.windDirection = parseDirection(form.currentWeather.wind.deg);
-
-                        form.getForecastWeather(form.selectedDivision).then(function(forecastWeather){
-                            form.forecastWeather = forecastWeather;
-                            form.forecastWeather.list = forecastWeather.list.slice(0,6);
-                            form.forecastWeather.name = form.currentWeather.name;
-                            form.forecastWeather.country = form.selectedCountry;
-                            forecastWeather.list.slice(0,6).forEach(function(forecast,index){
-                                form.forecastWeather.list[index].dt_txt = parseDate2(forecast.dt_txt);
-                                form.forecastWeather.list[index].main.temp = parseTemperature(forecast.main.temp);
-                                form.forecastWeather.list[index].main.temp_min = parseTemperature(forecast.main.temp_min);
-                                form.forecastWeather.list[index].main.temp_max = parseTemperature(forecast.main.temp_max);
-                                form.forecastWeather.list[index].wind.windDirection = parseDirection(forecast.wind.deg);
-                            });
-
-                            deferred.resolve(form);
-                        },function(error){
-                            deferred.reject('Division not found. Sorry');
-                        });
-                    }
-                },function(error){
-                    deferred.reject('Division not found. Sorry');
+                form.getDivisionsFromCountry(form.selectedCountry).then(function(result){
+                    deferred.resolve(result);
                 });
             })
         });
@@ -112,6 +75,8 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
     }
 
     form.getDivisionsFromCountry = function getDivisionsFromCountry(selectedCountry){
+        var deferred = $q.defer();
+
         var divisionsByCountryCode = form.allDivisions[selectedCountry].divisions;
         form.countryDivisions = $.map(divisionsByCountryCode, function(element){ //ALL DIVISIONS OF A COUNTRY TO FILL THE SELECT
             return element;
@@ -122,7 +87,11 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
 
 
         form.selectedDivision = form.countryDivisions[0];
-        form.getCurrentWeatherFromDivision(form.selectedDivision);
+        form.getCurrentWeatherFromDivision(form.selectedDivision).then(function(res){
+            deferred.resolve(res);
+        });
+
+        return deferred.promise;
     }
 
     form.getCurrentWeatherFromDivision = function getCurrentWeatherFromDivision(selectedDivision){
@@ -156,8 +125,6 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
                 },function(error){
                     deferred.reject('Division not found. Sorry');
                 });
-
-                
             }
         },function(error){
             deferred.reject('Division not found. Sorry');
@@ -171,14 +138,11 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
     //-------------------------------------------- HELPER FUNCTIONS --------------------------------------------//
     function parseDate(unix_timestamp){
         var date = new Date(unix_timestamp*1000);
-        // Hours part from the timestamp
+
         var hours = date.getHours();
-        // Minutes part from the timestamp
         var minutes = "0" + date.getMinutes();
-        // Seconds part from the timestamp
         var seconds = "0" + date.getSeconds();
 
-        // Will display time in 10:30:23 format
         return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
     }
 
@@ -205,51 +169,5 @@ angular.module('commonForm').factory('CountryForm',['Country','Divisions','Curre
         var aa = arr[(val % 16)];
         return aa;
     }
-
-    
-    /*/////////////////////////////////////////////
-        Country.get(function(country){
-            form.pureCountries = country;
-            var res = $.map(country, function(element){ 
-                return element; 
-            });
-
-            res.splice(250,8);
-            form.countries = res;  //ALL THE COUNTRIES TO FILL THE SELECT
-            form.selectedCountry = res[0].alpha2;  //COUNTRY SELECTED BY DEFAULT IN SELECT
-            form.wikiUrl = res[0].wikiUrl; //URL TO KNOW MORE ABOUT THE COUNTRY
-            form.officialName = res[0].officialName; //OFFICIAL NAME OF COUNTRY
-
-            Divisions.get(function(division){
-                form.allDivisions = division;  //ALL THE DIVISIONS
-                form.getDivisions(form.selectedCountry);
-            });
-        });
-
-        
-        form.getDivisions = function getDivisions(selectedCountry){  //FUNCTION TO GET DIVISIONS OF A COUNTRY
-            var divisionsByCountryCode = form.allDivisions[selectedCountry].divisions;
-            form.countryDivisions = $.map(divisionsByCountryCode, function(element){ //ALL DIVISIONS OF A COUNTRY TO FILL THE SELECT
-                return element;
-            });
-            form.wikiUrl = form.pureCountries[form.selectedCountry].wikiUrl; //SET URL TO KNOW MORE ABOUT THE COUNTRY WHEN COUNTRY CHANGES
-            form.officialName = form.pureCountries[form.selectedCountry].officialName; //SET OFFICIAL NAME OF COUNTRY WHEN COUNTRY CHANGES
-
-            form.selectedDivision = form.countryDivisions[0]; //DIVISION SELECTED BY DEFAULT IN SELECT
-            form.getCurrentWeather = function getCurrentWeather(selectedDivision){ //FUNCTION TO GET CURRENT WEATHER OF A DIVISION
-                CurrentWeather.get({q: selectedDivision+','+form.selectedCountry},function(currentWeather){
-                    form.currentWeather = currentWeather; // CURRENT WEATHER INFORMATION OF A DIVISION
-                    form.sunrise = parseDate(form.currentWeather.sys.sunrise);
-                    form.sunset = parseDate(form.currentWeather.sys.sunset);
-                    form.temperature = parseTemperature(form.currentWeather.main.temp);
-                    form.minTemperature = parseTemperature(form.currentWeather.main.temp_min);
-                    form.maxTemperature = parseTemperature(form.currentWeather.main.temp_max);
-                    form.windDirection = parseDirection(form.currentWeather.wind.deg);
-                    
-                });
-            }
-            form.getCurrentWeather(form.selectedDivision); //CALLING JUST FOR FIRST TIME
-        }
-    }*/
 
 }]);

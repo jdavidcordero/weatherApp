@@ -15,7 +15,7 @@ angular.module('forecastWeather').component('forecastWeather',{
             function setForecastWeather(){
                 self.forecastWeather = CountryForm.forecastWeather;
                 self.forecastWeather.name = CountryForm.forecastWeather.name;
-                self.forecastWeather.sys.country = CountryForm.forecastWeather.country;
+                self.forecastWeather.country = CountryForm.forecastWeather.country;
             }
         }
     ]
