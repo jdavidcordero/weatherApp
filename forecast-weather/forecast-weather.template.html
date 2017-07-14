@@ -1,9 +1,8 @@
-<hr>
-<div class="container">
+<div class="container w3-animate-right w3-margin-top">
     <h2>{{$ctrl.forecastWeather.name +", "+ $ctrl.forecastWeather.country}}</h2>
     <div class="table-responsive">
         <table class="table">
-            <tr>
+            <tr class="w3-yellow">
                 <th>Date</th>
                 <th>Weather</th>
                 <th>Temperature</th>
@@ -12,7 +11,7 @@
                 <th>Humidity</th>
                 <th>Wind</th>
             </tr>
-            <tr ng-repeat="forecastWeather in $ctrl.forecastWeather.list">
+            <tr class="w3-border-bottom w3-border-bottom-width w3-border-yellow" ng-repeat="forecastWeather in $ctrl.forecastWeather.list">
                 <td>
                     <img ng-src="http://openweathermap.org/img/w/{{forecastWeather.weather[0].icon}}.png" alt="">
                     {{forecastWeather.dt_txt}}

@@ -10,8 +10,11 @@
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/common-form.css">
+    <link rel="stylesheet" href="css/current-weather.css">
+    <link rel="stylesheet" href="css/forecast-weather.css">
     <script src="weather-app.module.js"></script>
     <script src="weather-app.config.js"></script>
     <script src="constants/api-key.constant.js"></script>
@@ -28,28 +31,30 @@
     <script src="common-form/common-form.service.js"></script>
     <title>Weather App</title>
 </head>
-<body>
-    <div class="container container-header">
+<body class="w3-black">
+    <div class="w3-container w3-yellow">
         <h1>Global Weather</h1>
     </div>
-    <div class="container">
-        <ul class="nav nav-tabs nav-justified">
-            <li role="presentation" id="liNavCurrent" class="liActive"><a href="#!/currentWeather">Current Weather</a></li>
-            <li role="presentation" id="liNavForecast"><a href="#!/forecastWeather">Forecast Weather</a></li>
-        </ul>
+    <div class="container w3-margin-top">
+        <div class="nav">
+            <ul class="nav nav-tabs nav-justified">
+                <li role="presentation"><a href="#!/currentWeather" id="aCurrent" class="w3-yellow w3-border w3-border-yellow">Current Weather</a></li>
+                <li role="presentation"><a href="#!/forecastWeather" id="aForecast" class="w3-border w3-border-yellow">Forecast Weather</a></li>
+            </ul>
+        </div>
         <common-form></common-form>
         <div ng-view></div>
     </div>
 
     <script>
-        $('#liNavCurrent').click(function(){
-            $('#liNavForecast').removeClass('liActive');
-            $('#liNavCurrent').addClass('liActive');
+        $('#aCurrent').click(function(){
+            $('#aForecast').removeClass('w3-yellow');
+            $('#aCurrent').addClass('w3-yellow');
         });
 
-        $('#liNavForecast').click(function(){
-            $('#liNavCurrent').removeClass('liActive');
-            $('#liNavForecast').addClass('liActive');
+        $('#aForecast').click(function(){
+            $('#aCurrent').removeClass('w3-yellow');
+            $('#aForecast').addClass('w3-yellow');
         });
     </script>
     
