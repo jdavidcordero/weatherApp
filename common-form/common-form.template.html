@@ -12,8 +12,9 @@
         </select>
     </div>
 </form>
-<div class="alert alert-danger hidden" role="alert" id="errorAlert">
-    <button type="button" class="close" ng-click="$ctrl.closeErrorAlert()">
-        <span aria-hidden="true">&times;</span>
-    </button>{{$ctrl.ErrorMessage}}
+<br>
+<div class="w3-panel w3-red w3-card-4 w3-display-container w3-animate-top hidden" role="alert" id="errorAlert">
+    <span aria-hidden="true" ng-click="$ctrl.closeErrorAlert()" class="w3-button w3-red w3-large w3-display-topright">&times;</span>
+    <h3>Error!</h3>
+    <p>{{$ctrl.ErrorMessage}}</p>
 </div>

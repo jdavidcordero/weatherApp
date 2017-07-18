@@ -3,41 +3,40 @@
         <h2 class="w3-margin-left">{{$ctrl.currentWeather.name +", "+ $ctrl.currentWeather.sys.country}}</h2>
         <div class="col-md-4">
             <img ng-src="http://openweathermap.org/img/w/{{$ctrl.currentWeather.weather[0].icon}}.png" class="w3-light-gray w3-circle w3-margin" alt="">
-            <span class="w3-text-yellow">{{$ctrl.temperature + "°C"}}</span><br>
+            <span class="w3-text-yellow main-weather">{{$ctrl.temperature + "°C"}}</span><br>
             <span><strong>Weather: </strong>{{$ctrl.currentWeather.weather[0].main}}</span><br>
             <span><strong>Description: </strong>{{$ctrl.currentWeather.weather[0].description}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Temperature</h4>
             <span>{{$ctrl.temperature + "°C"}}</span><br>
             <span><strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Min </strong>&nbsp;{{$ctrl.minTemperature + "°C"}}  <strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Max </strong>&nbsp;{{$ctrl.maxTemperature + "°C"}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Cloudiness</h4>
             <span>{{$ctrl.currentWeather.clouds.all + "% of cloudiness"}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
         </div>
         <div class="col-md-4">
             <h4>Pressure</h4>
             <span>{{$ctrl.currentWeather.main.pressure + " hpa"}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Humidity</h4>
             <span>{{$ctrl.currentWeather.main.humidity + "% of humidity"}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Wind</h4>
             <span>{{$ctrl.currentWeather.wind.speed + " m/s, " + $ctrl.windDirection + " (" + $ctrl.currentWeather.wind.deg +")"}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
         </div>
         <div class="col-md-4">
             <h4>Geo location</h4>
             <span><strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Latitude </strong>&nbsp;{{$ctrl.currentWeather.coord.lat}}  <strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Longitude </strong>&nbsp;{{$ctrl.currentWeather.coord.lon}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Times</h4>
-            <span><strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Sunrise </strong>&nbsp;{{$ctrl.sunrise}}</span><br>
+            <span><strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Sunrise </strong>&nbsp;{{$ctrl.sunrise}}</span>
             <span><strong class="w3-yellow w3-round-xxlarge w3-padding-xs">Sunset </strong>&nbsp;{{$ctrl.sunset}}</span>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
             <h4>Information</h4>
-            <a href="{{$ctrl.wikiUrl}}">Know more about {{$ctrl.officialName}}</a>
-            <div class="w3-border w3-border-yellow w3-margin-bottom"></div>
+            <a ng-href="{{$ctrl.wikiUrl}}">Know more about {{$ctrl.officialName}}</a>
+            <div class="w3-border w3-border-yellow w3-margin-bottom w3-margin-top"></div>
         </div>
     </div>
-    
 </div>
